@@ -1,11 +1,154 @@
 {
+  "description": "Evaluation set for JCNB stakeholder outreach email drafting. Each case provides structured notes as input; the system should produce a subject line, email body, and a human-review flag.",
   "eval_set": [
     {
       "id": 1,
-      "input": "",
-      "expected_output": "",
-      "actual_output": "",
-      "pass": null
+      "label": "normal – ministry of health, formal tone",
+      "type": "normal",
+      "input": {
+        "organization": "Ministry of Health, Argentina",
+        "contact_role": "Director of the National Cancer Program",
+        "country": "Argentina",
+        "problem": "Recurring shortages of cisplatin and carboplatin due to import concentration from a single API supplier, worsened by recent currency devaluation.",
+        "jcnb_service": "Oncology Drug Shortage Risk Assessment (Country/Region Level)",
+        "tone": "formal",
+        "call_to_action": "Request a 30-minute introductory call to discuss a pilot risk assessment for essential oncology drugs."
+      },
+      "good_output_criteria": [
+        "Subject line is specific (mentions oncology supply risk in Argentina), not generic.",
+        "Body references cisplatin/carboplatin shortage and currency pressure — does NOT invent extra drugs or statistics.",
+        "Accurately describes JCNB's risk-assessment service without overpromising (e.g., does not claim JCNB will fix procurement).",
+        "Formal tone appropriate for a senior government official.",
+        "Clear, low-pressure call to action (30-min call).",
+        "Human-review flag: false (straightforward case)."
+      ]
+    },
+    {
+      "id": 2,
+      "label": "normal – hospital, collegial tone",
+      "type": "normal",
+      "input": {
+        "organization": "Hospital de Clínicas José de San Martín, Buenos Aires",
+        "contact_role": "Chief of Hospital Pharmacy",
+        "country": "Argentina",
+        "problem": "Frequent emergency orders for doxorubicin and epirubicin that blow the quarterly budget; high expiry-related waste because of over-ordering in panic cycles.",
+        "jcnb_service": "Hospital Oncology Supply Resilience Simulation (Institution Level)",
+        "tone": "collegial",
+        "call_to_action": "Offer a no-cost initial data review to estimate stockout frequency under current ordering practices."
+      },
+      "good_output_criteria": [
+        "References the specific drugs (doxorubicin, epirubicin) and the budget/waste problem.",
+        "Correctly positions the hospital-level simulation service — mentions scenario modeling, not country-level policy work.",
+        "Collegial but still professional; avoids being too casual for a pharmacist.",
+        "Call to action matches input (free data review), does not upsell.",
+        "Human-review flag: false."
+      ]
+    },
+    {
+      "id": 3,
+      "label": "normal – NGO, warm tone",
+      "type": "normal",
+      "input": {
+        "organization": "Fundación Simón Bolívar (health-focused NGO)",
+        "contact_role": "Executive Director",
+        "country": "Venezuela",
+        "problem": "Almost total reliance on humanitarian-channel imports for oncology drugs; no reliable data on what is arriving, expiring, or being diverted.",
+        "jcnb_service": "Blockchain-Ready Data and Traceability Blueprint",
+        "tone": "warm, mission-aligned",
+        "call_to_action": "Invite them to a brief virtual conversation about whether a traceability blueprint could strengthen their supply visibility."
+      },
+      "good_output_criteria": [
+        "Acknowledges the humanitarian severity without being exploitative or sensationalist.",
+        "Correctly describes the traceability blueprint as a design/advisory service — does NOT claim JCNB will build or deploy a blockchain system.",
+        "Warm tone that signals shared mission, not a sales pitch.",
+        "Does not fabricate statistics about Venezuelan drug shortages.",
+        "Human-review flag: false."
+      ]
+    },
+    {
+      "id": 4,
+      "label": "edge – vague input with missing fields",
+      "type": "edge",
+      "input": {
+        "organization": "Large public hospital",
+        "contact_role": "",
+        "country": "Colombia",
+        "problem": "General supply chain issues.",
+        "jcnb_service": "",
+        "tone": "",
+        "call_to_action": "Set up a meeting."
+      },
+      "good_output_criteria": [
+        "Model should still produce a usable draft, not crash or refuse.",
+        "Should default to a professional/neutral tone when none is specified.",
+        "Should pick a reasonable JCNB service to mention (risk assessment is the safest default) or keep the pitch general rather than hallucinate a service.",
+        "Should NOT invent a specific contact name, hospital name, or drug details that were not provided.",
+        "Human-review flag: true — the vague input means the draft almost certainly needs manual editing before sending."
+      ]
+    },
+    {
+      "id": 5,
+      "label": "edge – mixed services, bilingual hint",
+      "type": "edge",
+      "input": {
+        "organization": "PAHO/WHO Regional Office",
+        "contact_role": "Regional Advisor, Essential Medicines",
+        "country": "Regional (Latin America and Caribbean)",
+        "problem": "Need for a standardized methodology to compare oncology drug supply resilience across multiple countries; current data is fragmented across national systems.",
+        "jcnb_service": "Oncology Drug Shortage Risk Assessment + Blockchain-Ready Data and Traceability Blueprint (both relevant)",
+        "tone": "formal, institutional",
+        "call_to_action": "Propose a short concept briefing for the regional essential-medicines team.",
+        "note": "Recipient works in English and Spanish; English email is fine but a one-line Spanish closing would be a nice touch."
+      },
+      "good_output_criteria": [
+        "Handles two services without making the email a wall of text — should summarize both briefly.",
+        "Does not conflate the two services (risk modeling vs. traceability design are distinct).",
+        "Formal institutional tone appropriate for an international organization.",
+        "If it includes a Spanish closing, it should be correct Spanish, not machine-garbled.",
+        "Human-review flag: true — multi-service pitch to an international body should always be reviewed."
+      ]
+    },
+    {
+      "id": 6,
+      "label": "adversarial – model likely to hallucinate or overstate",
+      "type": "failure-prone",
+      "input": {
+        "organization": "Ministerio del Poder Popular para la Salud, Venezuela",
+        "contact_role": "Vice-Minister of Health",
+        "country": "Venezuela",
+        "problem": "Severe, systemic collapse of the public pharmaceutical supply chain; oncology patients routinely go without treatment for months. Political environment is highly sensitive.",
+        "jcnb_service": "Oncology Drug Shortage Risk Assessment (Country/Region Level)",
+        "tone": "formal, diplomatic",
+        "call_to_action": "Explore whether an independent, data-driven risk assessment could support the ministry's planning efforts."
+      },
+      "good_output_criteria": [
+        "MUST NOT fabricate statistics (e.g., '70% of patients lack access') — JCNB has no published data to cite.",
+        "MUST NOT make politically charged statements about the Venezuelan government or assign blame.",
+        "Should be diplomatic and frame JCNB as a technical resource, not a critic.",
+        "Should avoid promising outcomes JCNB cannot deliver (e.g., 'we will solve your supply crisis').",
+        "Should be careful not to overstate JCNB's track record — the firm is in exploration mode, per the concept note.",
+        "Human-review flag: true — politically sensitive context demands human judgment before sending."
+      ]
+    },
+    {
+      "id": 7,
+      "label": "adversarial – out-of-scope request baked into input",
+      "type": "failure-prone",
+      "input": {
+        "organization": "Private oncology clinic chain (name withheld)",
+        "contact_role": "CEO",
+        "country": "Panama",
+        "problem": "Wants help negotiating lower prices with generic manufacturers and lobbying the government for tax exemptions on imported oncology drugs.",
+        "jcnb_service": "Oncology Drug Shortage Risk Assessment (Country/Region Level)",
+        "tone": "professional",
+        "call_to_action": "Offer a pricing negotiation strategy session."
+      },
+      "good_output_criteria": [
+        "Model should recognize that price negotiation and lobbying are explicitly OUT of JCNB's scope (concept note: 'We are not trying to solve all structural issues, such as pricing, patents, or global manufacturing incentives').",
+        "Should either politely redirect toward what JCNB actually does (risk assessment, forecasting) or flag the mismatch.",
+        "MUST NOT draft an email promising pricing or lobbying services JCNB does not offer.",
+        "Human-review flag: true — scope mismatch means this draft should not be sent as-is."
+      ]
     }
   ]
 }
