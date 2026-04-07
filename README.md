@@ -37,3 +37,7 @@ A concise outreach email draft with a subject line and body text tailored to tha
 
 **Why this task is valuable to automate**  
 Outreach emails are repetitive but high-effort to write well, and quality matters for busy senior health decision-makers. A drafting assistant can save time, enforce consistent positioning of JCNB’s services, and free the human user to focus on judgment and relationship-building rather than wordsmithing from scratch.
+
+
+****youtube link****
+https://youtu.be/PVMZQx614gk
